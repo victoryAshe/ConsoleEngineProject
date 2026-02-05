@@ -36,6 +36,9 @@ namespace Wanted
 			// 화면에 보여줄 문자열 값.
 			const char* text = nullptr;
 
+			int width = 0;
+			int height = 0;
+
 			// 좌표.
 			Vector2 position;
 
@@ -44,6 +47,8 @@ namespace Wanted
 
 			// Render priority.
 			int sortingOrder = 0;
+
+			bool spaceeTransparent = true;
 		};
 
 	public:
@@ -53,12 +58,23 @@ namespace Wanted
 		// Render.
 		void Draw();
 
-		// 그리는 데 필요한 Data를 제출(적재)하는 함수.
+		// One-Line-Actor용 Submit.
 		void Submit(
 			const char* text,
 			const Vector2& position,
 			Color color = Color::White,
 			int sortingOrder = 0
+		);
+
+		// Sprite2D용 Submit.
+		void Submit(
+			const char* image,
+			int width,
+			int height,
+			const Vector2& position,
+			Color color = Color::White,
+			int sortingOrder = 0,
+			bool spaceTransparent = true
 		);
 
 		// 즉시 화면에 표시할 때 사용.

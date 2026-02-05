@@ -16,6 +16,8 @@ void MouseTester::Tick(float deltaTime)
 	//Test Mouse Input.
 	if (Input::Get().GetMouseButton(0))
 	{
+		// 마우스 클릭 시 마우스 위치 출력.
+		/*
 		Vector2 mousePosition = Input::Get().MousePosition();
 		char buffer[256] = {};
 		sprintf_s(
@@ -24,6 +26,16 @@ void MouseTester::Tick(float deltaTime)
 			"cursor: {%d, %d}",
 			mousePosition.x,
 			mousePosition.y
+		);
+		*/
+		
+		// deltaTime 출력.
+		char buffer[256] = {};
+		sprintf_s(
+			buffer,
+			256,
+			"deltaTime: %f",
+			deltaTime
 		);
 
 		ChangeImage(buffer);

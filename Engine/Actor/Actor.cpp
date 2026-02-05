@@ -5,18 +5,83 @@
 
 #include <iostream>
 #include <Windows.h>
+#include <cstring>
 
 namespace Wanted
 {
-	Actor::Actor(const char* image, 
+	// ================================
+	// Actor.cpp 전용 helper: internal linkage
+	// ================================
+	namespace
+	{
+		void CopyLine(
+			char*& dest,
+			int& outW,
+			int& outH,
+			const char* source
+		)
+		{
+			SafeDeleteArray(dest);
+			
+			if (!source)
+			{
+				outW = 0; outH = 0;
+				return;
+			}
+
+			outH = 1;
+			outW = static_cast<int>(strlen(source));
+
+			dest = new char[outW + 1];
+			strcpy_s(dest, outW + 1, source); // '\0' 포함.
+		}
+
+		void CopySprite2D(
+			char*& dest,
+			int& outW,
+			int& outH,
+			const char* source,
+			int inW,
+			int inH
+		)
+		{
+			SafeDeleteArray(dest);
+
+			outW = (inW < 0) ? 0 : inW;
+			outH = (inH < 0) ? 0 : inH;
+
+			const int count = outW * outH;
+			if (!source || count<=0)
+			{
+				outW = 0;
+				outH = 0;
+				return;
+			}
+
+			dest = new char[count];
+			memcpy(dest, source, count);
+		}
+	}
+
+	Actor::Actor(const char* image,
 		const Vector2& position,
 		Color color)
-		: position(position), color(color)
+		: position(position), color(color), height(1)
 	{
-		// copy string.
-		width = static_cast<int>(strlen(image));
-		this->image = new char[width + 1];
-		strcpy_s(this->image, width + 1, image);
+		// 1줄 Text는 공백도 그려야하는 경우가 많으니 기본 false로 지정.
+		// 나중에 필요하면 true로 바꾸던가 하기.
+		spaceTransparent = false; 
+		CopyLine(this->image, width, height, image);
+	}
+
+	Actor::Actor(const char* image, 
+		int inWidth, int inHeight, 
+		const Vector2& position, 
+		Color color, 
+		bool spaceTransparent)
+		: position(position), color(color), spaceTransparent(spaceTransparent)
+	{
+		CopySprite2D(this->image, width, height, image, inWidth, inHeight);
 	}
 
 	Actor::~Actor()
@@ -37,11 +102,16 @@ namespace Wanted
 
 	void Actor:: Draw()
 	{
-		// Renderer에 그리기 요청.
-		//Renderer::Draw(position, color, image);
-
 		// Renderer에 Data 제출.
-		Renderer::Get().Submit(image, position, color, sortingOrder);
+		Renderer::Get().Submit(
+			image, 
+			width,
+			height,
+			position, 
+			color, 
+			sortingOrder,
+			spaceTransparent
+		);
 	}
 
 
@@ -66,33 +136,33 @@ namespace Wanted
 	bool Actor::TestIntersect(const Actor* const other)
 	{
 		// AABB (Axis Aligned Bounding Box).
-		// 원래는 시작점하고 끝점해서 2차원~3차원 계산함
-		// 여기서는: x 좌표만 고려하면 됨! y는 크기가 1이기 때문.
-
-		// 자기 자신의 x좌표 정보.
-		int xMin = position.x;
-		int xMax = position.x + width - 1;
-
-		// 충돌을 비교할 다른 Actor의 x좌표 정보.
-		int otherXMin = other->GetPosition().x;
-		int ohterXMax = other->position.x 
-			+ other->width - 1;
-
-		// 안 겹치는 조건 확인.
-		// 내 오른쪽 좌표보다 더 오른쪽에 있는 경우.
-		if (otherXMin > xMax)
+		
+		// 계산 필요가 없는 경우 filter.
+		if (width <= 0 || height <= 0 || other->GetWidth() <= 0 || other->GetHeight() <= 0)
 		{
 			return false;
 		}
 
-		// 내 왼쪽 좌표보다 더 왼쪽에 있는 경우.
-		if (ohterXMax < xMin)
-		{
-			return false;
-		}
+		// 자기 자신의 좌표 정보.
+		int aMinX = position.x;
+		int aMinY = position.y;
+		int aMaxX = position.x + width - 1;
+		int aMaxY = position.y + height - 1;
 
-		// y는 크기가 1이므로, 좌표가 같은지 여부만 확인.
-		return position.y == other->position.y;
+
+		// 충돌을 비교할 다른 Actor의 좌표 정보.
+		Vector2 bPos = other->GetPosition();
+		int bMinX = bPos.x;
+		int bMinY = bPos.y;
+		int bMaxX = bPos.x + other->GetWidth() - 1;
+		int bMaxY = bPos.y + other->GetHeight() - 1;
+
+		// 분리되어있는지 확인.
+		bool separated =
+			(bMinX > aMaxX) || (bMaxX < aMinX) ||
+			(bMinY > aMaxY) || (bMaxY < aMinY);
+
+		return !separated;
 	}
 
 	void Actor::ChangeImage(const char* newImage)
@@ -104,6 +174,16 @@ namespace Wanted
 		width = static_cast<int>(strlen(newImage));
 		image = new char[width + 1];
 		strcpy_s(image, width+1, newImage);
+	}
+
+	void Actor::ChangeSprite(
+		const char* newImage, 
+		int inWidth,
+		int inHeight,
+		bool inSpaceTransparent)
+	{
+		spaceTransparent = inSpaceTransparent;
+		CopySprite2D(image, width, height, newImage, inWidth, inHeight);
 	}
 
 	void Actor::SetPosition(const Vector2& newPosition)

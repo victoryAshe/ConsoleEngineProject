@@ -2,6 +2,8 @@
 #include "ScreenBuffer.h"
 #include "Util/Util.h"
 
+#include <cstring>
+
 namespace Wanted
 {
 	Renderer::Frame::Frame(int bufferCount)
@@ -121,64 +123,51 @@ namespace Wanted
 				continue;
 			}
 
-			// 세로 기준 화면 벗어났는지 확인.
-			if (command.position.y < 0
-				|| command.position.y >= screenSize.y)
+			Vector2 cPos = command.position;
+			// 세로 클리핑: 세로 기준 화면 벗어났는지 확인.
+			const int startY = cPos.y;
+			const int endY = cPos.y + command.height - 1;
+			if (endY < 0 || startY >= screenSize.y) continue;
+
+			const int visibleStartY = (startY < 0) ? 0 : startY;
+			const int visibleEndY = (endY >= screenSize.y) ? (screenSize.y - 1) : endY;
+
+			for (int y = visibleStartY; y <= visibleEndY; ++y)
 			{
-				continue;
-			}
+				// 가져올 char 좌표.
+				const int sourceY = y - startY;
 
-			// 화면에 그릴 문자열 길이.
-			const int length = static_cast<int>(strlen(command.text));
+				// 가로 클리핑: 가로 기준 화면 벗어났는지 확인.
+				const int startX = cPos.x;
+				const int endX = cPos.x + command.width - 1;
+				if (endX < 0 || startX >= screenSize.x) continue;
 
-			// 안그려도 되면 건너뜀.
-			if (length <= 0)
-			{
-				continue;
-			}
+				const int visibleStartX = (startX < 0) ? 0 : startX;
+				const int visibleEndX = (endX >= screenSize.x) ? (screenSize.x - 1) : endX;
 
-			// x좌표 기준으로 화면에서 벗어났는지 확인.
-			const int startX = command.position.x;
-			const int endX = command.position.x + length - 1;
-
-			if (endX < 0 || startX >= screenSize.x)
-			{
-				continue;
-			}
-
-			// Get Visible Positon.
-			const int visibleStart = startX < 0 ? 0 : startX;
-			const int visibleEnd = endX >= screenSize.x ? screenSize.x - 1 : endX;
-
-			// Set String.
-			for (int x = visibleStart; x <= visibleEnd; ++x)
-			{
-				// 문자열 안의 문자 index.
-				const int sourceIndex = x - startX;
-
-				// Frame (2차원 문자 배열) index.
-				const int index
-					= (command.position.y * screenSize.x) + x;
-
-				// Sorting order 비교.
-				if (frame->sortingOrderArray[index] 
-					> command.sortingOrder)
+				for (int x = visibleStartX; x <= visibleEndX; ++x)
 				{
-					// 같은 경우에도 덮어씀.
-					continue;
+					// 가져올 char 좌표.
+					const int sourceX = x - startX;
+
+					const int sourceIndex = (sourceY * command.width) + sourceX;
+					const char c = command.text[sourceIndex];
+
+					// 공백은 투명 처리해서 기존 pixel 유지.
+					if (command.spaceeTransparent && c == ' ') continue;
+
+					const int destIndex = (y * screenSize.x) + x;
+
+					// sortingOrder 기반 합성
+					// 현재 text의 sortingOrder가 더 크면(:앞 layer면) 덮어쓰기 x.
+					if (frame->sortingOrderArray[destIndex] > command.sortingOrder)
+						continue;
+
+					frame->charInfoArray[destIndex].Char.AsciiChar = c;
+					frame->charInfoArray[destIndex].Attributes = (WORD)command.color;
+					frame->sortingOrderArray[destIndex] = command.sortingOrder;
 				}
-
-				// Data 기록.
-				frame->charInfoArray[index].Char.AsciiChar
-					= command.text[sourceIndex];
-
-				frame->charInfoArray[index].Attributes
-					= (WORD)command.color;
-
-				// Update Sorting order.
-				frame->sortingOrderArray[index] = command.sortingOrder;
 			}
-
 		}
 
 		// Draw.
@@ -201,9 +190,33 @@ namespace Wanted
 		// Create Render Data => Add to Queue
 		RenderCommand command = {};
 		command.text = text;
+		command.width = (text) ? static_cast<int>(strlen(text)) : 0;
+		command.height = 1;
 		command.position = position;
 		command.color = color;
 		command.sortingOrder = sortingOrder;
+
+		command.spaceeTransparent = false;
+
+		renderQueue.emplace_back(command);
+	}
+
+	void Renderer::Submit(
+		const char* image, 
+		int width, int height, 
+		const Vector2& position, 
+		Color color, 
+		int sortingOrder, 
+		bool spaceTransparent)
+	{
+		RenderCommand command = {};
+		command.text = image;
+		command.width = width;
+		command.height = height;
+		command.position = position;
+		command.color = color;
+		command.sortingOrder = sortingOrder;
+		command.spaceeTransparent = spaceTransparent;
 
 		renderQueue.emplace_back(command);
 	}
