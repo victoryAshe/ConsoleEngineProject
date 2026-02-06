@@ -2,9 +2,9 @@
 
 #include "Math/Vector2.h"
 #include "Math/Color.h"
-
-#include <Windows.h>
+#include "Assets/AsciiArt.h"
 #include <vector>
+#include <memory>
 
 namespace Wanted
 {
@@ -33,6 +33,9 @@ namespace Wanted
 		// Rendereing할 Data.
 		struct RenderCommand
 		{
+			// text가 가리키는 buffer의 수명을 잡음
+			std::shared_ptr<const AsciiArt> artOwner;
+
 			// 화면에 보여줄 문자열 값.
 			const char* text = nullptr;
 
@@ -66,11 +69,20 @@ namespace Wanted
 			int sortingOrder = 0
 		);
 
-		// Sprite2D용 Submit.
+		// AsciiArt용 Submit
 		void Submit(
 			const char* image,
 			int width,
 			int height,
+			const Vector2& position,
+			Color color = Color::White,
+			int sortingOrder = 0,
+			bool spaceTransparent = true
+		);
+
+		// AsciiArt의 shared_ptr 제출용 submit.
+		void Submit(
+			std::shared_ptr<const AsciiArt> art,
 			const Vector2& position,
 			Color color = Color::White,
 			int sortingOrder = 0,

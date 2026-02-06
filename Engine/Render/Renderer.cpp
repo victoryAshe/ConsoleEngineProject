@@ -11,7 +11,6 @@ namespace Wanted
 		// 배열 생성 및 초기화.
 		charInfoArray = new CHAR_INFO[bufferCount];
 		memset(charInfoArray, 0, sizeof(CHAR_INFO) * bufferCount);
-		//ZeroMemory(charInfoArray, sizeof(CHAR_INFO) * bufferCount); // 위와 동일한 기능.
 
 		sortingOrderArray = new int[bufferCount];
 		memset(sortingOrderArray, 0, sizeof(int) * bufferCount);
@@ -213,6 +212,29 @@ namespace Wanted
 		command.text = image;
 		command.width = width;
 		command.height = height;
+		command.position = position;
+		command.color = color;
+		command.sortingOrder = sortingOrder;
+		command.spaceeTransparent = spaceTransparent;
+
+		renderQueue.emplace_back(command);
+	}
+
+	void Renderer::Submit(
+		std::shared_ptr<const AsciiArt> art, 
+		const Vector2& position, 
+		Color color, 
+		int sortingOrder, 
+		bool spaceTransparent)
+	{
+		RenderCommand command = {};
+		command.artOwner = art;
+		if (!art || !art->isValid()) return;
+
+		command.text = art->pixels.data();
+		command.width = art->width;
+		command.height = art->height;
+
 		command.position = position;
 		command.color = color;
 		command.sortingOrder = sortingOrder;

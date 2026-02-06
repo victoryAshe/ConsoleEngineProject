@@ -2,6 +2,7 @@
 
 #include "Math/Vector2.h"
 #include "Math/Color.h"
+
 #include <time.h>
 
 using namespace Wanted;

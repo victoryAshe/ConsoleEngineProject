@@ -1,5 +1,6 @@
 #include "Actor.h"
 #include "Util/Util.h"
+#include "Assets/AsciiLoader.h"
 #include "Render/Renderer.h"
 #include "Engine/Engine.h"
 
@@ -35,32 +36,6 @@ namespace Wanted
 			dest = new char[outW + 1];
 			strcpy_s(dest, outW + 1, source); // '\0' 포함.
 		}
-
-		void CopySprite2D(
-			char*& dest,
-			int& outW,
-			int& outH,
-			const char* source,
-			int inW,
-			int inH
-		)
-		{
-			SafeDeleteArray(dest);
-
-			outW = (inW < 0) ? 0 : inW;
-			outH = (inH < 0) ? 0 : inH;
-
-			const int count = outW * outH;
-			if (!source || count<=0)
-			{
-				outW = 0;
-				outH = 0;
-				return;
-			}
-
-			dest = new char[count];
-			memcpy(dest, source, count);
-		}
 	}
 
 	Actor::Actor(const char* image,
@@ -74,14 +49,14 @@ namespace Wanted
 		CopyLine(this->image, width, height, image);
 	}
 
-	Actor::Actor(const char* image, 
-		int inWidth, int inHeight, 
+	
+	Actor::Actor(
+		const std::string asciiActorName, 
 		const Vector2& position, 
 		Color color, 
 		bool spaceTransparent)
-		: position(position), color(color), spaceTransparent(spaceTransparent)
 	{
-		CopySprite2D(this->image, width, height, image, inWidth, inHeight);
+		SetAsciiArtByName(asciiActorName, spaceTransparent);
 	}
 
 	Actor::~Actor()
@@ -102,7 +77,21 @@ namespace Wanted
 
 	void Actor:: Draw()
 	{
-		// Renderer에 Data 제출.
+		// shared_ptr을 가진 AsciiArtActor
+		// Renderer에 shared_ptr을 넘겨서 RenderQueue가 자원 수명 보장.
+		if (sharedArt && sharedArt->isValid())
+		{
+			Renderer::Get().Submit(
+				sharedArt,
+				position,
+				color,
+				sortingOrder,
+				spaceTransparent
+			);
+			return;
+		}
+		
+		// 기존 1줄: Renderer에 Data 제출.
 		Renderer::Get().Submit(
 			image, 
 			width,
@@ -112,6 +101,21 @@ namespace Wanted
 			sortingOrder,
 			spaceTransparent
 		);
+	}
+
+	void Actor::SetAsciiArtByName(const std::string& asciiActorName, bool inSpaceTransparent)
+	{
+		sharedArt = AsciiLoader::GetOrLoad(asciiActorName);
+		spaceTransparent = inSpaceTransparent;
+
+		// 공유 resource를 쓰는 경우: 기존 소유 buffer가 필요없으면 해제.
+		SafeDeleteArray(image);
+
+		if (sharedArt && sharedArt->isValid())
+		{
+			width = sharedArt->width;
+			height = sharedArt->height;
+		}
 	}
 
 
@@ -174,16 +178,6 @@ namespace Wanted
 		width = static_cast<int>(strlen(newImage));
 		image = new char[width + 1];
 		strcpy_s(image, width+1, newImage);
-	}
-
-	void Actor::ChangeSprite(
-		const char* newImage, 
-		int inWidth,
-		int inHeight,
-		bool inSpaceTransparent)
-	{
-		spaceTransparent = inSpaceTransparent;
-		CopySprite2D(image, width, height, newImage, inWidth, inHeight);
 	}
 
 	void Actor::SetPosition(const Vector2& newPosition)

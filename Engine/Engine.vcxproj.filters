@@ -36,7 +36,7 @@
     <ClCompile Include="Render\Renderer.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Util\FileIO.cpp">
+    <ClCompile Include="Assets\AsciiLoader.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
@@ -72,6 +72,15 @@
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="Render\ScreenBuffer.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Assets\AsciiLoader.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Assets\AsciiArt.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Util\PathUtil.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="Util\FileIO.h">

@@ -3,6 +3,10 @@
 #include "Common/RTTI.h"
 #include "Math/Vector2.h"
 #include "Math/Color.h"
+#include "Assets/AsciiArt.h"
+
+#include <memory>
+#include <string>
 
 namespace Wanted
 {
@@ -22,15 +26,15 @@ namespace Wanted
 			Color color = Color::White
 			);
 
-		// 2D ASCII Art 생성자.
-		Actor(
-			const char* image,
-			int inWidth,
-			int inHeight,
-			const Vector2& position,
+		// AsciiArt::shared_ptr 생성자
+		// explicit keyword: 계산 도중 일어나는 자동 형변환을 원천봉쇄.
+		explicit Actor(
+			const std::string asciiActorName,
+			const Vector2& position = Vector2::Zero,
 			Color color = Color::White,
 			bool spaceTransparent = true
 		);
+		
 
 		virtual ~Actor();
 
@@ -38,6 +42,9 @@ namespace Wanted
 		virtual void BeginPlay();
 		virtual void Tick(float deltaTime);
 		virtual void Draw();
+
+		// AsciiArt를 Name을 통해 불러옴.
+		void SetAsciiArtByName(const std::string& asciiActorName, bool inSpaceTransparent = true);
 
 		// 삭제 요청 함수.
 		void Destroy();
@@ -53,14 +60,6 @@ namespace Wanted
 
 		// one-line-Actor의 Image값 변경 함수.
 		void ChangeImage(const char* newImage);
-
-		// 2D Actor의 Image값 변경 함수.
-		void ChangeSprite(
-			const char* newImage,
-			int inWidth,
-			int inHeight,
-			bool inSpaceTransparent = true
-		);
 
 		// 위치 변경 및 읽기 함수.
 		void SetPosition(const Vector2& newPosition);
@@ -103,6 +102,9 @@ namespace Wanted
 		// 현재 frame에 삭제 요청 받았는지 여부.
 		bool destroyRequested = false;
 
+		// 2D AsciiArt의 shared_ptr.
+		std::shared_ptr<const AsciiArt> sharedArt;
+
 		// 내부 저장
 		// 1줄: [width+1]
 		// 2D: [(width+1)*height]  
@@ -127,6 +129,8 @@ namespace Wanted
 
 		// 위치.
 		Vector2 position;
+
+		std::string actorName;
 	};
 
 }

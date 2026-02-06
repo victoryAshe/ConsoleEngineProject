@@ -1,26 +1,25 @@
 #pragma once
-#include <iostream>
-namespace Util
+
+#include <fstream>
+#include <sstream>
+
+namespace FileIO
 {
-
-#define READ_MODE "rt" //rt: read-text mode.
-#define WRITE_MODE "wt" //wt: write-text mode.
-
-	class FileIO
+	bool FileExists(const std::string& path)
 	{
-	public:
-		// File*: void*
-		// file을 다룰 수 있도록 하는 pointer로, file 그 자체는 아님.
-		inline FILE* OpenFile(const char* PATH, const char* MODE);
+		std::ifstream ifs(path.c_str());
+		return ifs.good();
+	}
 
-		inline void CloseFile(FILE* file);
+	std::string ReadAllTextFile(const std::string& path)
+	{
+		// 위와 비슷한 구문이지만 ifs를 아래서도 쓰므로,
+		// !FileExists(paht)로 쓸 수 없어서 다시 써야함.
+		std::ifstream ifs(path, std::ios::in | std::ios::binary);
+		if (!ifs.is_open()) return {};
 
-		inline void WriteFile(const char* PATH, const char* message);
-
-	private:
-		// File Size를 가늠해보기.
-		inline size_t FileSize(FILE*& file);
-	};
-
-
+		std::ostringstream oss;
+		oss << ifs.rdbuf();
+		return oss.str();
+	}
 }
