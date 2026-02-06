@@ -5,13 +5,13 @@
 
 using namespace Wanted;
 
-class GameLevel: public Level
+class ShootingGameLevel: public Level
 {
-	RTTI_DECLARATIONS(GameLevel, Level)
+	RTTI_DECLARATIONS(ShootingGameLevel, Level)
 
 public:
-	GameLevel();
-	~GameLevel();
+	ShootingGameLevel();
+	~ShootingGameLevel();
 
 private:
 	virtual void Tick(float deltaTime) override;

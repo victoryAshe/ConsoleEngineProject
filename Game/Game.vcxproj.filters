@@ -18,60 +18,60 @@
     <ClCompile Include="Main.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Level\GameLevel.cpp">
+    <ClCompile Include="Level\ShootingGameLevel.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Actor\Player.cpp">
+    <ClCompile Include="ShootingActor\Player.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Actor\PlayerBullet.cpp">
+    <ClCompile Include="ShootingActor\PlayerBullet.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="Util\Timer.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Actor\Enemy.cpp">
+    <ClCompile Include="ShootingActor\Enemy.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Actor\EnemySpawner.cpp">
+    <ClCompile Include="ShootingActor\EnemySpawner.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Actor\EnemyBullet.cpp">
+    <ClCompile Include="ShootingActor\EnemyBullet.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Actor\MouseTester.cpp">
+    <ClCompile Include="ShootingActor\MouseTester.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Actor\EnemyDestroyEffect.cpp">
+    <ClCompile Include="ShootingActor\EnemyDestroyEffect.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Level\GameLevel.h">
+    <ClInclude Include="Level\ShootingGameLevel.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Actor\Player.h">
+    <ClInclude Include="ShootingActor\Player.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Actor\PlayerBullet.h">
+    <ClInclude Include="ShootingActor\PlayerBullet.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="Util\Timer.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Actor\Enemy.h">
+    <ClInclude Include="ShootingActor\Enemy.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Actor\EnemySpawner.h">
+    <ClInclude Include="ShootingActor\EnemySpawner.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Actor\EnemyBullet.h">
+    <ClInclude Include="ShootingActor\EnemyBullet.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Actor\MouseTester.h">
+    <ClInclude Include="ShootingActor\MouseTester.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Actor\EnemyDestroyEffect.h">
+    <ClInclude Include="ShootingActor\EnemyDestroyEffect.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>

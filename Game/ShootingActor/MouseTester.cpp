@@ -27,16 +27,6 @@ void MouseTester::Tick(float deltaTime)
 			mousePosition.y
 		);
 		
-		/*
-		// deltaTime Ãâ·Â.
-		char buffer[256] = {};
-		sprintf_s(
-			buffer,
-			256,
-			"deltaTime: %f",
-			deltaTime
-		);
-		*/
 		ChangeImage(buffer);
 	}
 

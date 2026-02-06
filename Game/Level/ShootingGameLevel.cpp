@@ -1,14 +1,14 @@
-#include "GameLevel.h"
-#include "Actor/Player.h"
-#include "Actor/Enemy.h"
-#include "Actor/PlayerBullet.h"
-#include "Actor/EnemyBullet.h"
-#include "Actor/EnemySpawner.h"
-#include "Actor/MouseTester.h"
+#include "ShootingGameLevel.h"
+#include "ShootingActor/Player.h"
+#include "ShootingActor/Enemy.h"
+#include "ShootingActor/PlayerBullet.h"
+#include "ShootingActor/EnemyBullet.h"
+#include "ShootingActor/EnemySpawner.h"
+#include "ShootingActor/MouseTester.h"
 #include "Render/Renderer.h"
 #include "Engine/Engine.h"
 
-GameLevel::GameLevel()
+ShootingGameLevel::ShootingGameLevel()
 {
 	// Add Player Actor.
 	AddNewActor(new Player());
@@ -20,11 +20,11 @@ GameLevel::GameLevel()
 	AddNewActor(new MouseTester());
 }
 
-GameLevel::~GameLevel()
+ShootingGameLevel::~ShootingGameLevel()
 {
 }
 
-void GameLevel::Tick(float deltaTime)
+void ShootingGameLevel::Tick(float deltaTime)
 {
 	super::Tick(deltaTime);
 
@@ -32,7 +32,7 @@ void GameLevel::Tick(float deltaTime)
 	ProcessCollisionPlayerBulletAndEnemy();
 }
 
-void GameLevel::Draw()
+void ShootingGameLevel::Draw()
 {
 	super::Draw();
 
@@ -58,7 +58,7 @@ void GameLevel::Draw()
 	ShowScore();
 }
 
-void GameLevel::ProcessCollisionPlayerBulletAndEnemy()
+void ShootingGameLevel::ProcessCollisionPlayerBulletAndEnemy()
 {
 	// Filtering: Player Bullet°ú Enemy Actor
 	std::vector<Actor*> bullets;
@@ -104,7 +104,7 @@ void GameLevel::ProcessCollisionPlayerBulletAndEnemy()
 	}
 }
 
-void GameLevel::ProcessCollisionPlayerAndEnemyBullet()
+void ShootingGameLevel::ProcessCollisionPlayerAndEnemyBullet()
 {
 	// Filtering Actor.
 	Player* player = nullptr;
@@ -147,7 +147,7 @@ void GameLevel::ProcessCollisionPlayerAndEnemyBullet()
 	}
 }
 
-void GameLevel::ShowScore()
+void ShootingGameLevel::ShowScore()
 {
 	sprintf_s(scoreString, 128, "Score: %d", score);
 	Renderer::Get().Submit(

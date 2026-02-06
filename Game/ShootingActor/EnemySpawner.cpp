@@ -1,5 +1,5 @@
 #include "EnemySpawner.h"
-#include "Actor/Enemy.h"
+#include "Enemy.h"
 #include "Util/Util.h"
 #include "Level/Level.h"
 

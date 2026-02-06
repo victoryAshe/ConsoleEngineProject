@@ -2,8 +2,8 @@
 #include "Util/Util.h"
 #include "Engine/Engine.h"
 #include "Level/Level.h"
-#include "Actor/EnemyBullet.h"
-#include "Actor/EnemyDestroyEffect.h"
+#include "EnemyBullet.h"
+#include "EnemyDestroyEffect.h"
 
 Enemy::Enemy(const char* image, int yPosition)
 	:super(image)

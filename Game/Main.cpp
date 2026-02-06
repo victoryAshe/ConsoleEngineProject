@@ -1,6 +1,6 @@
 #include <iostream>
 #include "Engine/Engine.h"
-#include "Level/GameLevel.h"
+#include "Level/ShootingGameLevel.h"
 
 using namespace Wanted;
 
@@ -16,7 +16,7 @@ int main()
 	SetConsoleTitle(L"ConsoleGame");
 
 	Engine engine;
-	engine.SetNewLevel(new GameLevel());
+	engine.SetNewLevel(new ShootingGameLevel());
 	engine.Run();
 
 	return 0;
