@@ -1,11 +1,11 @@
-#include "Player.h"
+#include "ShootingPlayer.h"
 #include "PlayerBullet.h"
 #include "Core/Input.h"
 #include "Engine/Engine.h"
 #include "Level/Level.h"
 #include "Render/Renderer.h"
 
-Player::Player()
+ShootingPlayer::ShootingPlayer()
 	: super("<=A=>", Vector2::Zero, Color::Green),
 	fireMode(FireMode::OneShot)
 {
@@ -18,11 +18,11 @@ Player::Player()
 	timer.SetTargetTime(fireInterval);
 }
 
-Player::~Player()
+ShootingPlayer::~ShootingPlayer()
 {
 }
 
-void Player::Tick(float deltaTime)
+void ShootingPlayer::Tick(float deltaTime)
 {
 	super::Tick(deltaTime);
 
@@ -73,7 +73,7 @@ void Player::Tick(float deltaTime)
 }
 
 
-void Player::MoveLeft()
+void ShootingPlayer::MoveLeft()
 {
 	position.x -= 1;
 
@@ -85,7 +85,7 @@ void Player::MoveLeft()
 }
 
 
-void Player::MoveRight()
+void ShootingPlayer::MoveRight()
 {
 	position.x += 1;
 
@@ -95,7 +95,7 @@ void Player::MoveRight()
 	}
 }
 
-void Player::Fire()
+void ShootingPlayer::Fire()
 {
 	// 경과 시간 초기화.
 	timer.Reset();
@@ -110,7 +110,7 @@ void Player::Fire()
 	GetOwner()->AddNewActor(new PlayerBullet(bulletPosition));
 }
 
-void Player::FireInterval()
+void ShootingPlayer::FireInterval()
 {
 	// 발사 가능 여부 확인.
 	if (!CanShoot())
@@ -122,7 +122,7 @@ void Player::FireInterval()
 	Fire();
 }
 
-bool Player::CanShoot() const
+bool ShootingPlayer::CanShoot() const
 {
 	// 경과 시간 확인.
 	// 발사 간격보다 더 많이 흘렀는지.

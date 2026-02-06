@@ -1,6 +1,11 @@
 #include <iostream>
 #include "Engine/Engine.h"
+
+// Shooting Game.
 #include "Level/ShootingGameLevel.h"
+
+// Sokoban Game.
+#include "GameManager/SokobanGame.h"
 
 using namespace Wanted;
 
@@ -16,8 +21,11 @@ int main()
 	SetConsoleTitle(L"ConsoleGame");
 
 	Engine engine;
-	engine.SetNewLevel(new ShootingGameLevel());
-	engine.Run();
+	//engine.SetNewLevel(new ShootingGameLevel());
+	//engine.Run();
+
+	SokobanGame game;
+	game.Run();
 
 	return 0;
 }

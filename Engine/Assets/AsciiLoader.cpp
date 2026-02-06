@@ -66,7 +66,7 @@ namespace Wanted
 	{
 		// {ExeDir}/Assets/{ActorName}/{spriteName}.txt.
 		std::string path = PathUtil::GetExeDir();
-		path = PathUtil::JoinPath(path, "Assets");
+		path = PathUtil::JoinPath(path, "AsciiArt");
 		path = PathUtil::JoinPath(path, actorName);
 		path = PathUtil::JoinPath(path, "Normal.txt");
 

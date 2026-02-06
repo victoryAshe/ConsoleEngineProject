@@ -1,17 +1,18 @@
 #include "ShootingGameLevel.h"
-#include "ShootingActor/Player.h"
-#include "ShootingActor/Enemy.h"
-#include "ShootingActor/PlayerBullet.h"
-#include "ShootingActor/EnemyBullet.h"
-#include "ShootingActor/EnemySpawner.h"
-#include "ShootingActor/MouseTester.h"
+#include "Actor/Shooting/ShootingPlayer.h"
+#include "Actor/Shooting/Enemy.h"
+#include "Actor/Shooting/PlayerBullet.h"
+#include "Actor/Shooting/EnemyBullet.h"
+#include "Actor/Shooting/EnemySpawner.h"
+#include "Actor/Shooting/MouseTester.h"
 #include "Render/Renderer.h"
 #include "Engine/Engine.h"
+
 
 ShootingGameLevel::ShootingGameLevel()
 {
 	// Add Player Actor.
-	AddNewActor(new Player());
+	AddNewActor(new ShootingPlayer());
 
 	// Add Enemy Spawner.
 	AddNewActor(new EnemySpawner());
@@ -107,13 +108,13 @@ void ShootingGameLevel::ProcessCollisionPlayerBulletAndEnemy()
 void ShootingGameLevel::ProcessCollisionPlayerAndEnemyBullet()
 {
 	// Filtering Actor.
-	Player* player = nullptr;
+	ShootingPlayer* player = nullptr;
 	std::vector<Actor*> bullets;
 	for (Actor* const actor : actors)
 	{
-		if (!player && actor->IsTypeOf<Player>())
+		if (!player && actor->IsTypeOf<ShootingPlayer>())
 		{
-			player = actor->As<Player>();
+			player = actor->As<ShootingPlayer>();
 			continue;
 		}
 

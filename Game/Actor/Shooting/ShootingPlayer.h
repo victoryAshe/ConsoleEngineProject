@@ -5,7 +5,7 @@
 
 using namespace Wanted;
 
-class Player : public Actor
+class ShootingPlayer : public Actor
 {
 	// 발사 모드.
 	enum class FireMode
@@ -18,11 +18,11 @@ class Player : public Actor
 	// Timer 변수.
 	Timer timer;
 
-	RTTI_DECLARATIONS(Player, Actor)
+	RTTI_DECLARATIONS(ShootingPlayer, Actor)
 
 public:
-	Player();
-	~Player();
+	ShootingPlayer();
+	~ShootingPlayer();
 
 private:
 	virtual void Tick(float deltaTime) override;

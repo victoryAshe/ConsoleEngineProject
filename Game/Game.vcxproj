@@ -70,7 +70,8 @@
       <Command>xcopy ..\Library\Engine\$(Platform)\$(Configuration)\Engine.dll $(OutDir)\ /e /y</Command>
     </PostBuildEvent>
     <PreBuildEvent>
-      <Command>xcopy $(SolutionDir)Assets\AsciiArt\* $(OutDir)\Assets\ /e /y</Command>
+      <Command>xcopy $(SolutionDir)Assets\AsciiArt\* $(OutDir)AsciiArt\ /e /y
+xcopy $(SolutionDir)Assets\Stage\* $(OutDir)Stage\ /e /y</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -91,27 +92,44 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="ShootingActor\Enemy.cpp" />
-    <ClCompile Include="ShootingActor\EnemyBullet.cpp" />
-    <ClCompile Include="ShootingActor\EnemyDestroyEffect.cpp" />
-    <ClCompile Include="ShootingActor\EnemySpawner.cpp" />
-    <ClCompile Include="ShootingActor\MouseTester.cpp" />
-    <ClCompile Include="ShootingActor\Player.cpp" />
-    <ClCompile Include="ShootingActor\PlayerBullet.cpp" />
+    <ClCompile Include="Actor\Shooting\Enemy.cpp" />
+    <ClCompile Include="Actor\Shooting\EnemyBullet.cpp" />
+    <ClCompile Include="Actor\Shooting\EnemyDestroyEffect.cpp" />
+    <ClCompile Include="Actor\Shooting\EnemySpawner.cpp" />
+    <ClCompile Include="Actor\Shooting\MouseTester.cpp" />
+    <ClCompile Include="Actor\Shooting\ShootingPlayer.cpp" />
+    <ClCompile Include="Actor\Shooting\PlayerBullet.cpp" />
+    <ClCompile Include="Actor\Sokoban\Box.cpp" />
+    <ClCompile Include="Actor\Sokoban\Ground.cpp" />
+    <ClCompile Include="GameManager\SokobanGame.cpp" />
+    <ClCompile Include="Level\MenuLevel.cpp" />
     <ClCompile Include="Level\ShootingGameLevel.cpp" />
+    <ClCompile Include="Level\SokobanLevel.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Actor\Sokoban\SokobanPlayer.cpp" />
+    <ClCompile Include="Actor\Sokoban\Target.cpp" />
     <ClCompile Include="Util\Timer.cpp" />
+    <ClCompile Include="Actor\Sokoban\Wall.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ShootingActor\Enemy.h" />
-    <ClInclude Include="ShootingActor\EnemyBullet.h" />
-    <ClInclude Include="ShootingActor\EnemyDestroyEffect.h" />
-    <ClInclude Include="ShootingActor\EnemySpawner.h" />
-    <ClInclude Include="ShootingActor\MouseTester.h" />
-    <ClInclude Include="ShootingActor\Player.h" />
-    <ClInclude Include="ShootingActor\PlayerBullet.h" />
+    <ClInclude Include="Actor\Shooting\Enemy.h" />
+    <ClInclude Include="Actor\Shooting\EnemyBullet.h" />
+    <ClInclude Include="Actor\Shooting\EnemyDestroyEffect.h" />
+    <ClInclude Include="Actor\Shooting\EnemySpawner.h" />
+    <ClInclude Include="Actor\Shooting\MouseTester.h" />
+    <ClInclude Include="Actor\Shooting\ShootingPlayer.h" />
+    <ClInclude Include="Actor\Shooting\PlayerBullet.h" />
+    <ClInclude Include="Actor\Sokoban\Box.h" />
+    <ClInclude Include="Actor\Sokoban\Ground.h" />
+    <ClInclude Include="GameManager\SokobanGame.h" />
+    <ClInclude Include="Interface\ICanPlayerMove.h" />
+    <ClInclude Include="Level\MenuLevel.h" />
     <ClInclude Include="Level\ShootingGameLevel.h" />
+    <ClInclude Include="Actor\Sokoban\SokobanPlayer.h" />
+    <ClInclude Include="Actor\Sokoban\Target.h" />
+    <ClInclude Include="Level\SokobanLevel.h" />
     <ClInclude Include="Util\Timer.h" />
+    <ClInclude Include="Actor\Sokoban\Wall.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

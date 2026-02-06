@@ -21,28 +21,52 @@
     <ClCompile Include="Level\ShootingGameLevel.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="ShootingActor\Player.cpp">
+    <ClCompile Include="Actor\Shooting\ShootingPlayer.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="ShootingActor\PlayerBullet.cpp">
+    <ClCompile Include="Actor\Shooting\PlayerBullet.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="Util\Timer.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="ShootingActor\Enemy.cpp">
+    <ClCompile Include="Actor\Shooting\Enemy.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="ShootingActor\EnemySpawner.cpp">
+    <ClCompile Include="Actor\Shooting\EnemySpawner.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="ShootingActor\EnemyBullet.cpp">
+    <ClCompile Include="Actor\Shooting\EnemyBullet.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="ShootingActor\MouseTester.cpp">
+    <ClCompile Include="Actor\Shooting\MouseTester.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="ShootingActor\EnemyDestroyEffect.cpp">
+    <ClCompile Include="Actor\Shooting\EnemyDestroyEffect.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Actor\Sokoban\Box.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Actor\Sokoban\Ground.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Actor\Sokoban\SokobanPlayer.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Actor\Sokoban\Target.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Actor\Sokoban\Wall.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="GameManager\SokobanGame.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Level\MenuLevel.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Level\SokobanLevel.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
@@ -50,28 +74,55 @@
     <ClInclude Include="Level\ShootingGameLevel.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="ShootingActor\Player.h">
+    <ClInclude Include="Actor\Shooting\ShootingPlayer.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="ShootingActor\PlayerBullet.h">
+    <ClInclude Include="Actor\Shooting\PlayerBullet.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="Util\Timer.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="ShootingActor\Enemy.h">
+    <ClInclude Include="Actor\Shooting\Enemy.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="ShootingActor\EnemySpawner.h">
+    <ClInclude Include="Actor\Shooting\EnemySpawner.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="ShootingActor\EnemyBullet.h">
+    <ClInclude Include="Actor\Shooting\EnemyBullet.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="ShootingActor\MouseTester.h">
+    <ClInclude Include="Actor\Shooting\MouseTester.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="ShootingActor\EnemyDestroyEffect.h">
+    <ClInclude Include="Actor\Shooting\EnemyDestroyEffect.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor\Sokoban\Box.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor\Sokoban\Ground.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor\Sokoban\SokobanPlayer.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor\Sokoban\Target.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor\Sokoban\Wall.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="GameManager\SokobanGame.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Interface\ICanPlayerMove.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Level\MenuLevel.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Level\SokobanLevel.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
