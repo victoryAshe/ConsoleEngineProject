@@ -2,7 +2,7 @@
 class Timer
 {
 public:
-	// 생성지ㅏ: Timer 설정 시간 값 전달.
+	// 생성자: Timer 설정 시간 값 전달.
 	Timer(float targetTime = 1.0f);
 	
 	// pointer를 쓰지 않으므로 소멸자는 두지 않음.

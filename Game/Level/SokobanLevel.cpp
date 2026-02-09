@@ -4,8 +4,10 @@
 #include "Actor/Sokoban/Ground.h"
 #include "Actor/Sokoban/Box.h"
 #include "Actor/Sokoban/Target.h"
+#include "Actor/Sokoban/NPC.h"
 #include "Util/Util.h"
 #include "Util/PathUtil.h"
+#include "Common/RTTI.h"
 
 #include <iostream>
 
@@ -96,36 +98,33 @@ void SokobanLevel::LoadMap(std::string& fileName)
 		}
 
 		/*
-		* [5 kinds of actor]
+		* [6 kinds of actor]
 		#: Wall
 		.: Ground
 		p: Player
 		b: Box
 		t: Target
+		n: NPC
 		*/
 		// 한 문자씩 처리.
 		switch (mapCharacter)
 		{
 		case '#':
 		case '1':
-			//std::cout << "#";
 			AddNewActor(new Wall(position));
 			break;
 
 		case '.':
-			//std::cout << " ";
 			AddNewActor(new Ground(position));
 			break;
 
 		case 'p':
-			//std::cout << "P";
 			// Player: Movable
 			AddNewActor(new SokobanPlayer(position));
 			AddNewActor(new Ground(position));
 			break;
 
 		case 'b':
-			//std::cout << "B";
 			// Box: Movable
 			// 박스가 옮겨졌을 때, 그 밑에 땅이 있어야 함.
 			AddNewActor(new Box(position));
@@ -133,9 +132,13 @@ void SokobanLevel::LoadMap(std::string& fileName)
 			break;
 
 		case 't':
-			//std::cout << "T";
 			AddNewActor(new Target(position));
 			++targetScore;
+			break;
+
+		case 'n':
+			AddNewActor(new NPC(position, "방해꾼", "돌아가!", "넌 여길 지나갈 수 없어."));
+			AddNewActor(new Ground(position));
 			break;
 		}
 
@@ -154,18 +157,40 @@ bool SokobanLevel::CanMove(
 	const Wanted::Vector2& playerPosition,
 	const Wanted::Vector2& nextPosition)
 {
+
 	// Level에 있는 Box Actor 모으기.
+	// +) NPC.
 	// Box는 Player가 밀기 등 추가적으로 처리해야하기 때문.
 	std::vector<Actor*> boxes;
+	std::vector<NPC*> npcs;
 
 	// Level에 배치된 전체 Actor를 순회하면서 Box 찾기.
 	for (Actor* const actor : actors)
 	{
+		if (!actor || actor->DestroyRequested()) continue;
+
 		// Actor가 Box type인지 확인.
 		if (actor->IsTypeOf<Box>())
 		{
 			boxes.emplace_back(actor);
 			continue;
+		}
+		if (actor->IsTypeOf<NPC>())
+		{
+			npcs.emplace_back(dynamic_cast<NPC*>(actor));
+			continue;
+		}
+	}
+
+	// 이동하려는 위치에 NPC가 있는지 확인.
+	for (NPC* const npc : npcs)
+	{
+		// 위치 비교
+		// 새 위치에 NPC가 있으면: 이동 불가.
+		if (npc->GetPosition() == nextPosition)
+		{
+			npc->PlayCollisionEvent();
+			return (!npc || npc->DestroyRequested());
 		}
 	}
 

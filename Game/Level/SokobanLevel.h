@@ -14,7 +14,6 @@ public:
 
 	// Event ÇÔ¼ö override.
 	virtual void Draw() override;
-
 private:
 	// Load Game Map.
 	void LoadMap(std::string& fileName);

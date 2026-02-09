@@ -28,7 +28,7 @@ namespace Wanted
 			bool spaceTransparent = true
 		);
 
-		~UI();
+		virtual ~UI();
 
 	protected:
 		virtual void Tick(float deltaTime);

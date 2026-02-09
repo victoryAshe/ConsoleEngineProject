@@ -20,7 +20,7 @@ int main()
 	// 제목 설정. 나중에 엔진으로 넘겨주기.
 	SetConsoleTitle(L"ConsoleGame");
 
-	Engine engine;
+	//Engine engine;
 	//engine.SetNewLevel(new ShootingGameLevel());
 	//engine.Run();
 

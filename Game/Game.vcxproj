@@ -101,6 +101,7 @@ xcopy $(SolutionDir)Assets\Stage\* $(OutDir)Stage\ /e /y</Command>
     <ClCompile Include="Actor\Shooting\PlayerBullet.cpp" />
     <ClCompile Include="Actor\Sokoban\Box.cpp" />
     <ClCompile Include="Actor\Sokoban\Ground.cpp" />
+    <ClCompile Include="Actor\Sokoban\NPC.cpp" />
     <ClCompile Include="GameManager\SokobanGame.cpp" />
     <ClCompile Include="Level\MenuLevel.cpp" />
     <ClCompile Include="Level\ShootingGameLevel.cpp" />
@@ -121,6 +122,7 @@ xcopy $(SolutionDir)Assets\Stage\* $(OutDir)Stage\ /e /y</Command>
     <ClInclude Include="Actor\Shooting\PlayerBullet.h" />
     <ClInclude Include="Actor\Sokoban\Box.h" />
     <ClInclude Include="Actor\Sokoban\Ground.h" />
+    <ClInclude Include="Actor\Sokoban\NPC.h" />
     <ClInclude Include="GameManager\SokobanGame.h" />
     <ClInclude Include="Interface\ICanPlayerMove.h" />
     <ClInclude Include="Level\MenuLevel.h" />
@@ -128,6 +130,7 @@ xcopy $(SolutionDir)Assets\Stage\* $(OutDir)Stage\ /e /y</Command>
     <ClInclude Include="Actor\Sokoban\SokobanPlayer.h" />
     <ClInclude Include="Actor\Sokoban\Target.h" />
     <ClInclude Include="Level\SokobanLevel.h" />
+    <ClInclude Include="Util\MessageEvent.h" />
     <ClInclude Include="Util\Timer.h" />
     <ClInclude Include="Actor\Sokoban\Wall.h" />
   </ItemGroup>
