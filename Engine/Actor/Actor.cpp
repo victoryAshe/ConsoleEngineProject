@@ -51,12 +51,13 @@ namespace Wanted
 
 	
 	Actor::Actor(
-		const std::string asciiActorName, 
-		const Vector2& position, 
-		Color color, 
+		const std::string asciiActorName,
+		const Vector2& position,
+		Color color,
 		bool spaceTransparent)
+		: position(position), color(color), spaceTransparent(spaceTransparent)
 	{
-		SetAsciiArtByName(asciiActorName, spaceTransparent);
+		SetAsciiArtByName(asciiActorName);
 	}
 
 	Actor::~Actor()
@@ -103,10 +104,9 @@ namespace Wanted
 		);
 	}
 
-	void Actor::SetAsciiArtByName(const std::string& asciiActorName, bool inSpaceTransparent)
+	void Actor::SetAsciiArtByName(const std::string& stateName)
 	{
-		sharedArt = AsciiLoader::GetOrLoad(asciiActorName);
-		spaceTransparent = inSpaceTransparent;
+		sharedArt = AsciiLoader::GetOrLoad(actorName,stateName);
 
 		// 공유 resource를 쓰는 경우: 기존 소유 buffer가 필요없으면 해제.
 		SafeDeleteArray(image);
@@ -182,9 +182,6 @@ namespace Wanted
 
 	void Actor::SetPosition(const Vector2& newPosition)
 	{
-		// Renderer에 빈칸 그리기 요청.
-		//Renderer::Draw(position, ' ');
-		
 		// 변경하려는 위치가 현재 위치와 같으면 건너뜀.
 		if(position == newPosition)
 		{

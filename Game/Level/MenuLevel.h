@@ -4,6 +4,8 @@
 #include "Math/Color.h"
 #include "Render/Renderer.h"
 #include <vector>
+#include <string>
+
 
 using namespace Wanted;
 
@@ -65,5 +67,9 @@ private:
 
 	// Menu Item ¹è¿­.
 	std::vector<MenuItem*> items;
+
+	// Title¿ë.
+	const std::string titleFileName = "Title";
+	//shared_ptr<const AsciiArt>
 };
 

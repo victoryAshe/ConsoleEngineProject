@@ -1,6 +1,7 @@
 #include "AsciiLoader.h"
 #include "Util/PathUtil.h"
 #include "Util/FileIO.h"
+#include "Assets/AsciiLoader.h"
 
 #include <sstream>
 #include <iostream>
@@ -8,14 +9,14 @@
 namespace Wanted 
 {
 	std::unordered_map<std::string, std::shared_ptr<const AsciiArt>> AsciiLoader::cache;
-	std::shared_ptr<const AsciiArt> AsciiLoader::GetOrLoad(const std::string& actorName)
+	std::shared_ptr<const AsciiArt> AsciiLoader::GetOrLoad(const std::string& actorName, const std::string& state)
 	{
 		// CacheHit: 이미 Load되어있는지 확인, 있으면: return.
 		auto it = cache.find(actorName);
 		if (it != cache.end()) return it->second;
 
-		// 새로 Load.
-		const std::string path = BuildSpritePath(actorName);
+		// 새로 Loaad.
+		const std::string path = BuildSpritePath(actorName, state);
 		
 		if (!FileIO::FileExists(path))
 		{
@@ -62,13 +63,13 @@ namespace Wanted
 	* // TODO: {ActorName}\의 모든 파일을 이름을 key로 해서 unordered_map에 저장해,
 	* // Animation으로 사용할 수 있도록 한다.
 	*/
-	std::string AsciiLoader::BuildSpritePath(const std::string& actorName)
+	std::string AsciiLoader::BuildSpritePath(const std::string& actorName, const std::string& state)
 	{
 		// {ExeDir}/Assets/{ActorName}/{spriteName}.txt.
 		std::string path = PathUtil::GetExeDir();
 		path = PathUtil::JoinPath(path, "AsciiArt");
 		path = PathUtil::JoinPath(path, actorName);
-		path = PathUtil::JoinPath(path, "Normal.txt");
+		path = PathUtil::JoinPath(path, state+".txt");
 
 		return path;
 	}
