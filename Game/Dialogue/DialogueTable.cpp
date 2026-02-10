@@ -24,19 +24,21 @@ std::wstring DialogueTable::UTF8toWide(const std::string& utf8)
     int size = MultiByteToWideChar(
         CP_UTF8,
         0,
-        utf8.c_str(),
-        -1,
+        utf8.data(),
+        static_cast<int>(utf8.size()),
         nullptr,
         0
     );
+    if (size <= 0) return std::wstring();
 
-    std::wstring wide(size - 1, L'\0');
+    std::wstring wide;
+    wide.resize(size);
 
     MultiByteToWideChar(
         CP_UTF8,
         0,
-        utf8.c_str(),
-        -1,
+        utf8.data(),
+        static_cast<int>(utf8.size()),
         &wide[0],
         size
     );

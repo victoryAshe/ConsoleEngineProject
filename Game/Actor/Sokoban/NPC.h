@@ -14,14 +14,15 @@ public:
 	NPC(const Vector2& newPosition, 
 		const char* npcName,
 		const char* dialogueCsvPath,
-		int startDialougeID
+		int dialogueStartID,
+		int dialogueEndID
 	);
 
 	// Player-NPC Collision event.
 	void PlayCollisionEvent();
 
 	// DialogueSession이 종료될 때 호출(중복 실행 방지 Flag 해제).
-	void NotifyDialogueEnded();
+	void OnDialgoueSessionEnded(int lastDialogueID);
 
 private:
 	void StartDialogueSession();
@@ -32,10 +33,14 @@ private:
 
 	// Related Dialogue Data.
 	std::string dialogueCsvPath;
-	int startDialogueID = 0;
+	int startDialogueID = 1;
+	int endDialogueID = 0;
 
 	// Dialgoue 중복 발동 방지용.
 	bool isDialogueActive = false;
+
+	// Dialogue가 정상 종료되었는지 기록
+	bool isDialogueCompleted = false;
 };
 
 

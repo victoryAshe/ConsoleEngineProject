@@ -1,4 +1,5 @@
 #pragma once
+
 #include "Actor/Actor.h"
 #include "Dialogue/DialogueRow.h"
 #include <string>
@@ -20,13 +21,11 @@ class DialogueSession: public Actor
 	RTTI_DECLARATIONS(DialogueSession, Actor)
 
 public:
-	DialogueSession(NPC* ownerNpc, const std::string& csvPath, int startDialogueID);
+	DialogueSession(NPC* inOwnerNpc, const std::string& csvPath, int startDialogueID);
 
 	virtual void BeginPlay() override;
 	virtual void Tick(float deltaTime) override;
 	virtual void Draw() override; // Renderering X.
-
-	virtual void OnDestroy() override;
 
 private:
 	int ShowAndGetNextDialogueID(const DialogueRow& row);
@@ -41,5 +40,8 @@ private:
 
 	// MeassageBox를 한 frame에 한 단계만 처리하기 위함.
 	bool pendingShow = true;
+
+	// 마지막으로 표시했던 dialogueID.
+	int lastID = 0;
 };
 

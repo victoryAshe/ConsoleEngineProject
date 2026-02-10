@@ -6,10 +6,10 @@
 #include <string>
 
 DialogueSession::DialogueSession(
-	NPC* ownerNpc, 
+	NPC* inOwnerNpc, 
 	const std::string& csvPath, 
 	int startDialogueID)
-	: ownerNPC(ownerNPC),
+	: ownerNPC(inOwnerNpc),
 	csvPath(csvPath),
 	currentID(startDialogueID)
 {
@@ -46,9 +46,15 @@ void DialogueSession::Tick(float deltaTime)
 		return;
 	}
 
+	lastID = currentID;
+
 	const int nextID = ShowAndGetNextDialogueID(row);
 	if (nextID == 0)
 	{
+		if (ownerNPC && !ownerNPC->DestroyRequested())
+		{
+			ownerNPC->OnDialgoueSessionEnded(lastID);
+		}
 		Destroy();
 		return;
 	}
@@ -83,6 +89,8 @@ int DialogueSession::ShowAndGetNextDialogueID(const DialogueRow& row)
 		if (choice == 1) return row.jump1;
 		if (choice == 2) return row.jump2;
 		if (choice == 3) return row.jump3;
+
+		// return 0: 닫힘이나 취소도 종료로 간주.
 		return 0;
 	}
 
@@ -91,19 +99,11 @@ int DialogueSession::ShowAndGetNextDialogueID(const DialogueRow& row)
 		const int choice = MessageEvent::MessageYesNo(title, body);
 		if (choice == 1) return row.jump1;
 		if (choice == 2) return row.jump2;
+
 		return 0;
 	}
 
 	// 그 외 Event는 OK 처리.
 	MessageEvent::MessageOK(title, body);
 	return row.jump1;
-}
-
-
-void DialogueSession::OnDestroy()
-{
-	if (ownerNPC && !ownerNPC->DestroyRequested())
-	{
-		ownerNPC->NotifyDialogueEnded();
-	}
 }

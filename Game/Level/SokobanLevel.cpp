@@ -141,7 +141,8 @@ void SokobanLevel::LoadMap(std::string& fileName)
 		case 'n':
 			// NPC: Deletable
 			// NPC가 사라졌을 때, 그 밑에 땅이 있어야 함!
-			AddNewActor(new NPC(position, "스피드웨건", dialoguePath.c_str(), 1));
+			// 나중에 case에 따라 NPC 설정파일 Load해서 가져오는 것으로 변경.
+			AddNewActor(new NPC(position, "스피드웨건", dialoguePath.c_str(), 1, 2));
 			AddNewActor(new Ground(position));
 			break;
 		}
