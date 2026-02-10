@@ -4,7 +4,7 @@
 #include "Actor/Sokoban/Ground.h"
 #include "Actor/Sokoban/Box.h"
 #include "Actor/Sokoban/Target.h"
-#include "Actor/Sokoban/NPC.h"
+#include "NPC/NPC.h"
 #include "Util/Util.h"
 #include "Util/PathUtil.h"
 #include "Common/RTTI.h"
@@ -14,8 +14,8 @@
 
 SokobanLevel::SokobanLevel()
 {
-	std::string fileName = "Stage1.txt";
-	LoadMap(fileName);
+	std::string mapName = "Stage1";
+	LoadMap(mapName);
 }
 
 void SokobanLevel::Draw()
@@ -34,18 +34,18 @@ void SokobanLevel::Draw()
 	}
 }
 
-void SokobanLevel::LoadMap(std::string& fileName)
+void SokobanLevel::LoadMap(std::string& mapName)
 {
 	// Load File.
 	// 최종 경로 만들기.
 	std::string exePath = PathUtil::GetExeDir();
 	std::string path = exePath;
 	path = PathUtil::JoinPath(path, "Stage");
-	path = PathUtil::JoinPath(path, fileName);
+	path = PathUtil::JoinPath(path, mapName + ".txt");
 
 	std::string dialoguePath = exePath;
 	dialoguePath = PathUtil::JoinPath(dialoguePath, "Dialogue");
-	dialoguePath = PathUtil::JoinPath(dialoguePath, "Stage1.csv");
+	dialoguePath = PathUtil::JoinPath(dialoguePath, mapName+".csv");
 
 	// Open File.
 	FILE* file = nullptr;
@@ -138,10 +138,10 @@ void SokobanLevel::LoadMap(std::string& fileName)
 			++targetScore;
 			break;
 
-		case 'n':
+		case 'S':
 			// NPC: Deletable
 			// NPC가 사라졌을 때, 그 밑에 땅이 있어야 함!
-			// 나중에 case에 따라 NPC 설정파일 Load해서 가져오는 것으로 변경.
+			// TODO: case에 따라 NPC 설정파일 Load해서 가져오는 것으로 변경.
 			AddNewActor(new NPC(position, "스피드웨건", dialoguePath.c_str(), 1, 2));
 			AddNewActor(new Ground(position));
 			break;
@@ -154,7 +154,7 @@ void SokobanLevel::LoadMap(std::string& fileName)
 	// Free buffer already have been used
 	delete[] data;
 
-	// Close itf successfuly opened.
+	// Close if successfuly opened.
 	fclose(file);
 }
 

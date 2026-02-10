@@ -16,7 +16,7 @@ public:
 	virtual void Draw() override;
 private:
 	// Load Game Map.
-	void LoadMap(std::string& fileName);
+	void LoadMap(std::string& mapName);
 
 	// ICanPlayerMove을(를) 통해 상속됨
 	virtual bool CanMove(

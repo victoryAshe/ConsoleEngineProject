@@ -48,6 +48,7 @@ void SokobanPlayer::Tick(float deltaTime)
 		Engine::Get().QuitEngine();
 	}
 
+	/*
 	// "Space" key => Create Box
 	if (Input::Get().GetKeyDown(VK_SPACE))
 	{
@@ -57,7 +58,7 @@ void SokobanPlayer::Tick(float deltaTime)
 			owner->AddNewActor(new Box(GetPosition()));
 		}
 	}
-
+	*/
 	// check interface.
 	ICanPlayerMove* canPlayerMoveInterface = nullptr;
 

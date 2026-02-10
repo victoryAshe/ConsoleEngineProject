@@ -1,5 +1,5 @@
 #include "DialogueSession.h"
-#include "Actor/Sokoban/NPC.h"
+#include "NPC/NPC.h"
 #include "Util/MessageEvent.h"
 
 #include "Dialogue/DialogueTable.h"
