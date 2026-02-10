@@ -26,7 +26,7 @@ bool NpcTable::LoadFromCSV(const std::string& path)
 
 		NpcRow row;
 		row.StageName = fields[0];
-		row.npcName = CsvReader::UTF8toWide(fields[1]);
+		row.npcName = fields[1];
 		row.dialogueStartID = CsvReader::ToInt(fields[2]);
 		row.dialogueEndID = CsvReader::ToInt(fields[3]);
 

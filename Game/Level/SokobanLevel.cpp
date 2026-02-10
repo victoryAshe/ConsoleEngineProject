@@ -5,8 +5,12 @@
 #include "Actor/Sokoban/Box.h"
 #include "Actor/Sokoban/Target.h"
 #include "NPC/NPC.h"
+#include "NPC/NpcRow.h"
+#include "NPC/NpcTable.h"
+
 #include "Util/Util.h"
 #include "Util/PathUtil.h"
+#include "Util/MessageEvent.h"
 #include "Common/RTTI.h"
 
 #include <iostream>
@@ -39,17 +43,19 @@ void SokobanLevel::LoadMap(std::string& mapName)
 	// Load File.
 	// 최종 경로 만들기.
 	std::string exePath = PathUtil::GetExeDir();
-	std::string path = exePath;
-	path = PathUtil::JoinPath(path, "Stage");
-	path = PathUtil::JoinPath(path, mapName + ".txt");
+	std::string mapPath = exePath;
+	mapPath = PathUtil::JoinPath(mapPath, "Stage");
+	mapPath = PathUtil::JoinPath(mapPath, mapName + ".txt");
 
 	std::string dialoguePath = exePath;
 	dialoguePath = PathUtil::JoinPath(dialoguePath, "Dialogue");
 	dialoguePath = PathUtil::JoinPath(dialoguePath, mapName+".csv");
 
+
+
 	// Open File.
 	FILE* file = nullptr;
-	fopen_s(&file, path.c_str(), "rt");
+	fopen_s(&file, mapPath.c_str(), "rt");
 
 	// null check
 	if (!file)
@@ -106,7 +112,8 @@ void SokobanLevel::LoadMap(std::string& mapName)
 		p: Player
 		b: Box
 		t: Target
-		n: NPC
+		NPC
+		// => 이외 문자들 중 npc 설정 파일을 찾을 수 있는 것들은 npc로 생성.
 		*/
 		// 한 문자씩 처리.
 		switch (mapCharacter)
@@ -139,12 +146,34 @@ void SokobanLevel::LoadMap(std::string& mapName)
 			break;
 
 		case 'S':
+		{
+			AddNewActor(new Ground(position));
+
+			// TODO: case에 따라 NPC 설정파일 Load해서 가져오는 것으로 변경.
+			std::string npcPath = exePath;
+			npcPath = PathUtil::JoinPath(npcPath, "NPC");
+			npcPath = PathUtil::JoinPath(npcPath, std::string(1, mapCharacter) + ".csv");
+			bool loaded = NpcTable::LoadFromCSV(npcPath);
+			if (!loaded)
+			{
+				MessageEvent::MessageOK(L"NPC Table Error", L"Failed to load NPC CSV.");
+				break;
+			}
+			NpcRow row;
+			if (!NpcTable::TryGet(mapName, row))
+			{
+				MessageEvent::MessageOK(L"NPC Table Error", L"Failed to load NPC row.");
+				break;
+			}
+			
 			// NPC: Deletable
 			// NPC가 사라졌을 때, 그 밑에 땅이 있어야 함!
-			// TODO: case에 따라 NPC 설정파일 Load해서 가져오는 것으로 변경.
-			AddNewActor(new NPC(position, "스피드웨건", dialoguePath.c_str(), 1, 2));
-			AddNewActor(new Ground(position));
+			AddNewActor(new NPC(position, row.npcName.c_str(), dialoguePath.c_str(), row.dialogueStartID, row.dialogueEndID));
+			
 			break;
+		}
+
+
 		}
 
 		// x 좌표 증가 처리.

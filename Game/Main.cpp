@@ -26,6 +26,6 @@ int main()
 
 	SokobanGame game;
 	game.Run();
-
+	
 	return 0;
 }
