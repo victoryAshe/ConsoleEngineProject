@@ -89,4 +89,46 @@ namespace Wanted
 
 		return true;
 	}
+	int CsvReader::ToInt(const std::string& s)
+	{
+		return std::atoi(s.c_str());
+	}
+
+	inline std::wstring CsvReader::UTF8toWide(const std::string& utf8)
+	{
+		if (utf8.empty()) return std::wstring();
+
+		int size = MultiByteToWideChar(
+			CP_UTF8,
+			0,
+			utf8.data(),
+			static_cast<int>(utf8.size()),
+			nullptr,
+			0
+		);
+		if (size <= 0) return std::wstring();
+
+		std::wstring wide;
+		wide.resize(size);
+
+		MultiByteToWideChar(
+			CP_UTF8,
+			0,
+			utf8.data(),
+			static_cast<int>(utf8.size()),
+			&wide[0],
+			size
+		);
+
+		return wide;
+	}
+
+	UINT CsvReader::ParseEventID(const std::string& s)
+	{
+		const char* begin = s.c_str();
+		char* end = nullptr;
+		unsigned long val = std::strtoul(begin, &end, 0);
+
+		return static_cast<UINT>(val);
+	}
 }

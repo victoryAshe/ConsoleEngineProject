@@ -3,8 +3,9 @@
 #include <unordered_map>
 #include <string>
 
-// CSV Load
-// DialogueID => DialogueRow狼 历厘家.
+
+// CSV Load.
+// table: DialogueID => DialogueRow狼 历厘家.
 class DialogueTable
 {
 public:
@@ -12,12 +13,9 @@ public:
 	const static bool TryGet(int dialougeID, DialogueRow& out);
 
 private:
-	static int ToInt(const std::string& s);
-	static UINT ParseEventID(const std::string& s);
+	
 
 private:
 	static std::unordered_map<int, DialogueRow> table;
-
-	static inline std::wstring UTF8toWide(const std::string& utf8);
 };
 

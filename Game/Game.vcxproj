@@ -106,7 +106,7 @@ xcopy $(SolutionDir)Assets\NPC\* $(OutDir)NPC\ /e /y</Command>
     <ClCompile Include="NPC\NPC.cpp" />
     <ClCompile Include="Dialogue\DialogueSession.cpp" />
     <ClCompile Include="Dialogue\DialogueTable.cpp" />
-    <ClCompile Include="NPC\NPCTable.cpp" />
+    <ClCompile Include="NPC\NpcTable.cpp" />
     <ClCompile Include="GameManager\SokobanGame.cpp" />
     <ClCompile Include="Level\MenuLevel.cpp" />
     <ClCompile Include="Level\ShootingGameLevel.cpp" />
@@ -131,7 +131,8 @@ xcopy $(SolutionDir)Assets\NPC\* $(OutDir)NPC\ /e /y</Command>
     <ClInclude Include="Dialogue\DialogueRow.h" />
     <ClInclude Include="Dialogue\DialogueSession.h" />
     <ClInclude Include="Dialogue\DialogueTable.h" />
-    <ClInclude Include="NPC\NPCTable.h" />
+    <ClInclude Include="NPC\NpcRow.h" />
+    <ClInclude Include="NPC\NpcTable.h" />
     <ClInclude Include="GameManager\SokobanGame.h" />
     <ClInclude Include="Interface\ICanPlayerMove.h" />
     <ClInclude Include="Level\MenuLevel.h" />

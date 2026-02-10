@@ -1,55 +1,14 @@
 #include "DialogueTable.h"
 #include "Util/CsvReader.h"
 
+using namespace Wanted;
+
 std::unordered_map<int, DialogueRow> DialogueTable::table;
-
-int DialogueTable::ToInt(const std::string& s)
-{
-    return std::atoi(s.c_str());
-}
-
-UINT DialogueTable::ParseEventID(const std::string& s)
-{
-    const char* begin = s.c_str();
-    char* end = nullptr;
-    unsigned long val = std::strtoul(begin, &end, 0);
-
-    return static_cast<UINT>(val);
-}
-
-std::wstring DialogueTable::UTF8toWide(const std::string& utf8)
-{
-    if (utf8.empty()) return std::wstring();
-
-    int size = MultiByteToWideChar(
-        CP_UTF8,
-        0,
-        utf8.data(),
-        static_cast<int>(utf8.size()),
-        nullptr,
-        0
-    );
-    if (size <= 0) return std::wstring();
-
-    std::wstring wide;
-    wide.resize(size);
-
-    MultiByteToWideChar(
-        CP_UTF8,
-        0,
-        utf8.data(),
-        static_cast<int>(utf8.size()),
-        &wide[0],
-        size
-    );
-
-    return wide;
-}
 
 bool DialogueTable::LoadFromCSV(const std::string& path)
 {
     std::vector<std::vector<std::string>> rows;
-    if (!Wanted::CsvReader::ReadAll(path, rows)) return false;
+    if (!CsvReader::ReadAll(path, rows)) return false;
 
 
     bool skipHeader = true;
@@ -67,13 +26,13 @@ bool DialogueTable::LoadFromCSV(const std::string& path)
         if (fields.size() < 7) continue;
 
         DialogueRow row;
-        row.dialogueID = ToInt(fields[0]);
-        row.eventID = ParseEventID(fields[1]);
-        row.script = UTF8toWide(fields[2]);
-        row.character = UTF8toWide(fields[3]);
-        row.jump1 = ToInt(fields[4]);
-        row.jump2 = ToInt(fields[5]);
-        row.jump3 = ToInt(fields[6]);
+        row.dialogueID = CsvReader::ToInt(fields[0]);
+        row.eventID = CsvReader::ParseEventID(fields[1]);
+        row.script = CsvReader::UTF8toWide(fields[2]);
+        row.character = CsvReader::UTF8toWide(fields[3]);
+        row.jump1 = CsvReader::ToInt(fields[4]);
+        row.jump2 = CsvReader::ToInt(fields[5]);
+        row.jump3 = CsvReader::ToInt(fields[6]);
 
         table[row.dialogueID] = row;
     }
