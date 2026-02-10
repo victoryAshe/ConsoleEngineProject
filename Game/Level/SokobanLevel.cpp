@@ -38,12 +38,14 @@ void SokobanLevel::LoadMap(std::string& fileName)
 {
 	// Load File.
 	// 최종 경로 만들기.
-	std::string path = PathUtil::GetExeDir();
+	std::string exePath = PathUtil::GetExeDir();
+	std::string path = exePath;
 	path = PathUtil::JoinPath(path, "Stage");
 	path = PathUtil::JoinPath(path, fileName);
 
-	std::cout << path;
-
+	std::string dialoguePath = exePath;
+	dialoguePath = PathUtil::JoinPath(dialoguePath, "Dialogue");
+	dialoguePath = PathUtil::JoinPath(dialoguePath, "Stage1.csv");
 
 	// Open File.
 	FILE* file = nullptr;
@@ -137,7 +139,9 @@ void SokobanLevel::LoadMap(std::string& fileName)
 			break;
 
 		case 'n':
-			AddNewActor(new NPC(position, "방해꾼", "돌아가!", "넌 여길 지나갈 수 없어."));
+			// NPC: Deletable
+			// NPC가 사라졌을 때, 그 밑에 땅이 있어야 함!
+			AddNewActor(new NPC(position, "스피드웨건", dialoguePath.c_str(), 1));
 			AddNewActor(new Ground(position));
 			break;
 		}
@@ -167,8 +171,6 @@ bool SokobanLevel::CanMove(
 	// Level에 배치된 전체 Actor를 순회하면서 Box 찾기.
 	for (Actor* const actor : actors)
 	{
-		if (!actor || actor->DestroyRequested()) continue;
-
 		// Actor가 Box type인지 확인.
 		if (actor->IsTypeOf<Box>())
 		{
@@ -242,8 +244,9 @@ bool SokobanLevel::CanMove(
 		{
 			if (actor->GetPosition() == newPosition)
 			{
-				// #2. Wall이면 이동 불가.
-				if (actor->IsTypeOf<Wall>())
+				// #2. Wall || NPC이면 이동 불가.
+				if (actor->IsTypeOf<Wall>()
+					|| actor->IsTypeOf<NPC>())
 				{
 					return false;
 				}
@@ -285,8 +288,8 @@ bool SokobanLevel::CanMove(
 		}
 	}
 
-	// Error.
-	return false;
+	// Other.
+	return true;
 }
 
 bool SokobanLevel::CheckGameClear()

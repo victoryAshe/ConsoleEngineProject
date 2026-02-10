@@ -2,6 +2,8 @@
 #include "Level/Level.h"
 #include "Core/Input.h"
 #include "Util/Util.h"
+
+#include "Util/PathUtil.h"
 #include "Render/Renderer.h"
 
 #include <iostream>
@@ -174,6 +176,7 @@ namespace Wanted
 	{
 		// Open Engine Setting File.
 		FILE* file = nullptr;
+		
 		fopen_s(&file, "../Config/Setting.txt", "rt");
 
 		// Exception Handling

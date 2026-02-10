@@ -72,6 +72,12 @@
     <ClCompile Include="Actor\Sokoban\NPC.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="Dialogue\DialogueTable.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Dialogue\DialogueSession.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Level\ShootingGameLevel.h">
@@ -132,6 +138,15 @@
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="Util\MessageEvent.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Dialogue\DialogueRow.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Dialogue\DialogueTable.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Dialogue\DialogueSession.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>

@@ -71,7 +71,8 @@
     </PostBuildEvent>
     <PreBuildEvent>
       <Command>xcopy $(SolutionDir)Assets\AsciiArt\* $(OutDir)AsciiArt\ /e /y
-xcopy $(SolutionDir)Assets\Stage\* $(OutDir)Stage\ /e /y</Command>
+xcopy $(SolutionDir)Assets\Stage\* $(OutDir)Stage\ /e /y
+xcopy $(SolutionDir)Assets\Dialogue\* $(OutDir)Dialogue\ /e /y</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -102,6 +103,8 @@ xcopy $(SolutionDir)Assets\Stage\* $(OutDir)Stage\ /e /y</Command>
     <ClCompile Include="Actor\Sokoban\Box.cpp" />
     <ClCompile Include="Actor\Sokoban\Ground.cpp" />
     <ClCompile Include="Actor\Sokoban\NPC.cpp" />
+    <ClCompile Include="Dialogue\DialogueSession.cpp" />
+    <ClCompile Include="Dialogue\DialogueTable.cpp" />
     <ClCompile Include="GameManager\SokobanGame.cpp" />
     <ClCompile Include="Level\MenuLevel.cpp" />
     <ClCompile Include="Level\ShootingGameLevel.cpp" />
@@ -123,6 +126,9 @@ xcopy $(SolutionDir)Assets\Stage\* $(OutDir)Stage\ /e /y</Command>
     <ClInclude Include="Actor\Sokoban\Box.h" />
     <ClInclude Include="Actor\Sokoban\Ground.h" />
     <ClInclude Include="Actor\Sokoban\NPC.h" />
+    <ClInclude Include="Dialogue\DialogueRow.h" />
+    <ClInclude Include="Dialogue\DialogueSession.h" />
+    <ClInclude Include="Dialogue\DialogueTable.h" />
     <ClInclude Include="GameManager\SokobanGame.h" />
     <ClInclude Include="Interface\ICanPlayerMove.h" />
     <ClInclude Include="Level\MenuLevel.h" />

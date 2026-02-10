@@ -2,7 +2,6 @@
 
 #include "Actor/Actor.h"
 
-#include <unordered_map>
 #include <string>
 
 using namespace Wanted;
@@ -14,21 +13,29 @@ class NPC : public Actor
 public:
 	NPC(const Vector2& newPosition, 
 		const char* npcName,
-		const char* title,
-		const char* message
+		const char* dialogueCsvPath,
+		int startDialougeID
 	);
 
+	// Player-NPC Collision event.
 	void PlayCollisionEvent();
 
+	// DialogueSession이 종료될 때 호출(중복 실행 방지 Flag 해제).
+	void NotifyDialogueEnded();
+
 private:
+	void StartDialogueSession();
 	
 
 private:
-	// 나중에 Level에서 생성 시 npcName을 통해 불러옴.
-	std::unordered_map<UINT, const char*> actions;
+	std::string npcName;
 
-	const char* npcName;
-	const char* title;
-	const char* message;
+	// Related Dialogue Data.
+	std::string dialogueCsvPath;
+	int startDialogueID = 0;
+
+	// Dialgoue 중복 발동 방지용.
+	bool isDialogueActive = false;
 };
+
 
