@@ -37,6 +37,10 @@ void NPC::OnDialgoueSessionEnded(int lastDialogueID)
 
 	// EndID로 잘 끝났는지 판단.
 	isDialogueCompleted = (lastDialogueID == endDialogueID);
+	if (isDialogueCompleted==true)
+	{
+		Destroy();
+	}
 }
 
 
