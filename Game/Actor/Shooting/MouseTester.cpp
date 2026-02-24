@@ -13,7 +13,6 @@ void MouseTester::Tick(float deltaTime)
 {
 	super::Tick(deltaTime);
 
-	//Test Mouse Input.
 	if (Input::Get().GetMouseButton(0))
 	{
 		// 마우스 클릭 시 마우스 위치 출력.

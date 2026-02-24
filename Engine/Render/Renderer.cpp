@@ -76,7 +76,7 @@ namespace Wanted
 		SafeDelete(frame);
 		for (ScreenBuffer*& buffer : screenBuffers)
 		{
-			SafeDeleteArray(buffer);
+			if(buffer) SafeDeleteArray(buffer);
 		}
 	}
 

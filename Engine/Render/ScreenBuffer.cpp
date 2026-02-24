@@ -64,9 +64,9 @@ namespace Wanted
 	ScreenBuffer::~ScreenBuffer()
 	{
 		// Free Buffer.
-		if (buffer)
+		if (&buffer)
 		{
-			CloseHandle(buffer);
+			CloseHandle(&buffer);
 		}
 	}
 

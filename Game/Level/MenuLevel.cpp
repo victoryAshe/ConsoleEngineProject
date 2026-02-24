@@ -1,5 +1,6 @@
 #include "MenuLevel.h"
 #include "GameManager/SokobanGame.h"
+#include "Level/SokobanLevel.h"
 #include "Core/Input.h"
 
 MenuLevel::MenuLevel()
@@ -21,7 +22,18 @@ MenuLevel::MenuLevel()
 			SokobanGame::Get().QuitEngine();
 		}
 	));
-
+	/*
+	items.emplace_back(new MenuItem
+	(
+		"ReStart Game",
+		[]()
+		{
+			SokobanGame::Get().SetNewLevel(new SokobanLevel());
+		}
+	)
+	
+	)
+	*/
 }
 
 MenuLevel::~MenuLevel()

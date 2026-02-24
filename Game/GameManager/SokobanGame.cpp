@@ -30,8 +30,11 @@ SokobanGame::~SokobanGame()
 	// 모든 Level 삭제.
 	for (Level*& level : levels)
 	{
-		delete level;
-		level = nullptr;
+		if (&level)
+		{
+			delete level;
+			level = nullptr;
+		}
 	}
 
 	// 배열 정리.

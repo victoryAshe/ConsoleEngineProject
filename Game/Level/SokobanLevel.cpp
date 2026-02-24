@@ -13,6 +13,8 @@
 #include "Util/MessageEvent.h"
 #include "Common/RTTI.h"
 
+#include "Render/Renderer.h"
+
 #include <iostream>
 
 
@@ -26,6 +28,7 @@ void SokobanLevel::Draw()
 {
 	super::Draw();
 
+
 	// Game Clear인 경우, Message 출력.
 	if (isGameClear)
 	{
@@ -34,7 +37,7 @@ void SokobanLevel::Draw()
 		Util::SetConsoleTextColor(Color::White);
 
 		// Print Game Clear message.
-		std::cout << "Game Clear!";
+		Renderer::Get().Submit("Game Clear!", Vector2::Zero, Color::Green, 100);
 	}
 }
 
@@ -362,5 +365,5 @@ bool SokobanLevel::CheckGameClear()
 	}
 
 	// 목표 점수에 도달했는지 확인.
-	return currentScore == targetScore;
+	return (currentScore == targetScore);
 }
